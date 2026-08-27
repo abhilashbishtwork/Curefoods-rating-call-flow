@@ -314,7 +314,7 @@
     <h2>Proposed flow — automated, no live agent</h2>
     <figure>
       <div class="diagram-frame">
-        <svg viewBox="0 0 1400 400" role="img" aria-label="Order delivered triggers a lookup in Urban Piper, which returns a masked number and OTP; Exotel dials that number and plays a 30-second recorded rating ask; the call either connects or goes unanswered, and both outcomes are written to a backend log.">
+        <svg viewBox="0 0 1400 400" role="img" aria-label="Order received triggers a lookup in Urban Piper, which returns a masked number and OTP; Exotel dials that number and plays a 30-second recorded rating ask; the call either connects or goes unanswered — an unanswered call retries once — and both outcomes are written to a backend log.">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -358,7 +358,7 @@
           <!-- N1 Order Delivered -->
           <rect x="20" y="165" width="140" height="70" rx="10" fill="#FBFAF5" stroke="#E1DCC9" stroke-width="1.5"/>
           <text class="node-title" x="90" y="196" text-anchor="middle" fill="#1B1B18">ORDER</text>
-          <text class="node-title" x="90" y="212" text-anchor="middle" fill="#1B1B18">DELIVERED</text>
+          <text class="node-title" x="90" y="212" text-anchor="middle" fill="#1B1B18">RECEIVED</text>
           <text class="node-sub" x="90" y="227" text-anchor="middle" fill="#8B876F">trigger event</text>
 
           <!-- N2 Urban Piper -->
