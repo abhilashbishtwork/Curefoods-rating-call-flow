@@ -314,7 +314,7 @@
     <h2>Proposed flow — automated, no live agent</h2>
     <figure>
       <div class="diagram-frame">
-        <svg viewBox="0 0 1560 400" role="img" aria-label="Order received triggers a lookup in Urban Piper for a masked number, then the order is dispatched; only after dispatch, around the 25th minute post-delivery, does Exotel dial that number and play a 30-second recorded rating ask. A connect logs immediately; a no-answer retries once, and only closes into the Google Sheet log if that second attempt also goes unanswered.">
+        <svg viewBox="0 0 1560 520" role="img" aria-label="Order received triggers a lookup in Urban Piper for a masked number, then the order is dispatched; Exotel places a 1st call attempt right after dispatch and plays a 30-second recorded rating ask. A connect logs immediately. A no-answer on the 1st attempt waits until the order is delivered, then places a 2nd attempt around the 25th minute post-delivery; that 2nd attempt's outcome, connected or still no answer, is what closes into the Google Sheet log.">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -338,7 +338,7 @@
           <text class="arrow-label" x="385" y="145" text-anchor="middle" fill="#5B584E">Zomato: masked number (before dispatch)</text>
           <text class="arrow-label" x="385" y="160" text-anchor="middle" fill="#5B584E">Swiggy: masked number + OTP</text>
           <text class="arrow-label" x="575" y="255" text-anchor="middle" fill="#5B584E">auto-dial</text>
-          <text class="arrow-label" x="575" y="270" text-anchor="middle" fill="#5B584E">~25 min post-delivery</text>
+          <text class="arrow-label" x="575" y="270" text-anchor="middle" fill="#5B584E">1st attempt — right after dispatch</text>
 
           <!-- branch dot -->
           <circle cx="990" cy="200" r="5" fill="currentColor"/>
@@ -350,14 +350,17 @@
           <text class="arrow-label" x="980" y="140" text-anchor="end" fill="#2C5A40">answered</text>
           <text class="arrow-label" x="980" y="265" text-anchor="end" fill="#8A382E">no answer</text>
 
-          <!-- retry loop on no-answer -->
-          <path d="M1220,300 C1220,258 1110,258 1110,300" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
-          <text class="arrow-label" x="1165" y="245" text-anchor="middle" fill="#5B584E">no answer on 1st attempt → retry (2nd attempt)</text>
-          <text class="arrow-label" x="1165" y="260" text-anchor="middle" fill="#5B584E">still no answer after 2nd → close &amp; log as no_answer</text>
+          <!-- no-answer path: wait for delivery, then a 2nd attempt -->
+          <line x1="1165" y1="360" x2="1128" y2="422" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="1200" y1="460" x2="1253" y2="460" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
 
           <!-- converge arrows into Google Sheet log -->
           <line x1="1280" y1="80" x2="1363" y2="188" stroke="#3E7A56" stroke-width="1.5" marker-end="url(#arrowSuccess)"/>
-          <line x1="1280" y1="325" x2="1363" y2="215" stroke="#B14A3D" stroke-width="1.5" marker-end="url(#arrowDanger)"/>
+          <line x1="1300" y1="430" x2="1408" y2="240" stroke="#3E7A56" stroke-width="1.5" marker-end="url(#arrowSuccess)"/>
+          <line x1="1420" y1="430" x2="1500" y2="240" stroke="#B14A3D" stroke-width="1.5" marker-end="url(#arrowDanger)"/>
+
+          <text class="arrow-label" x="1290" y="415" text-anchor="end" fill="#2C5A40">picked up (2nd)</text>
+          <text class="arrow-label" x="1430" y="415" text-anchor="start" fill="#8A382E">still no answer → final</text>
 
           <!-- N1 Order Received -->
           <rect x="20" y="165" width="140" height="70" rx="10" fill="#FBFAF5" stroke="#E1DCC9" stroke-width="1.5"/>
@@ -394,7 +397,17 @@
           <!-- N6b No Answer -->
           <rect x="1050" y="300" width="230" height="60" rx="10" fill="#FBEAE6" stroke="#B14A3D" stroke-width="1.5"/>
           <text class="node-title" x="1165" y="326" text-anchor="middle" fill="#8A382E">NO ANSWER</text>
-          <text class="node-sub" x="1165" y="342" text-anchor="middle" fill="#8A382E">hangup / rejected</text>
+          <text class="node-sub" x="1165" y="342" text-anchor="middle" fill="#8A382E">hangup / rejected — 1st attempt</text>
+
+          <!-- N8 Wait for delivery -->
+          <rect x="1050" y="430" width="150" height="60" rx="10" fill="#FBFAF5" stroke="#E1DCC9" stroke-width="1.5"/>
+          <text class="node-title" x="1125" y="456" text-anchor="middle" fill="#1B1B18">WAIT</text>
+          <text class="node-sub" x="1125" y="472" text-anchor="middle" fill="#8B876F">until delivered</text>
+
+          <!-- N9 2nd attempt call -->
+          <rect x="1260" y="430" width="200" height="60" rx="10" fill="#FFFFFF" stroke="#E1DCC9" stroke-width="1.5"/>
+          <text class="node-title" x="1360" y="456" text-anchor="middle" fill="#1B1B18">2ND ATTEMPT</text>
+          <text class="node-sub" x="1360" y="472" text-anchor="middle" fill="#8B876F">~25 min post-delivery</text>
 
           <!-- N7 Google Sheet log -->
           <rect x="1370" y="165" width="170" height="70" rx="10" fill="#FBF0D9" stroke="#B8790C" stroke-width="1.5"/>
@@ -403,7 +416,7 @@
           <text class="node-sub" x="1455" y="227" text-anchor="middle" fill="#7A4E05">outcome + metrics</text>
         </svg>
       </div>
-      <figcaption>A connect logs immediately; a no-answer only logs after the 2nd attempt also goes unanswered — both write to the same Google Sheet, which is what makes a success rate computable at all.</figcaption>
+      <figcaption>A connect logs immediately. A no-answer on the 1st attempt waits for delivery, then tries again ~25 min later — that 2nd attempt's outcome is what finally closes into the Google Sheet log.</figcaption>
     </figure>
   </section>
 
@@ -431,7 +444,7 @@
       <li>
         <div class="stage-body">
           <div class="stage-title">Place the call <span class="sys">Exotel</span></div>
-          <div class="stage-desc">Only once the order is dispatched, the masked number is handed to Exotel, which dials the customer directly. No agent is involved — this is a fully automated outbound call. If the order is delivered within 20 minutes, the call is placed on the 25th minute post-delivery — giving the customer time to actually eat before being asked to rate. Up to 2 call attempts (trials) are allowed per order.</div>
+          <div class="stage-desc">Once the order is dispatched, the masked number is handed to Exotel, which dials the customer directly — this 1st attempt fires right after dispatch. No agent is involved; it's a fully automated outbound call. If this attempt goes unanswered, the flow waits until the order is actually delivered, then places a 2nd attempt around the 25th minute post-delivery, giving the customer time to eat before being asked again. Up to 2 call attempts (trials) are allowed per order.</div>
         </div>
       </li>
       <li>
@@ -467,6 +480,7 @@
           <tr><td class="field">status</td><td>connected / no_answer / rejected / busy</td><td class="example">connected</td></tr>
           <tr><td class="field">duration_sec</td><td>Length of the call</td><td class="example">34</td></tr>
           <tr><td class="field">clip_played_full</td><td>Whether the 30s ask finished playing</td><td class="example">true</td></tr>
+          <tr><td class="field">feedback</td><td>Open-ended text captured if the customer said anything beyond the rating</td><td class="example">"Delivery was late but food was hot"</td></tr>
         </tbody>
       </table>
     </div>
