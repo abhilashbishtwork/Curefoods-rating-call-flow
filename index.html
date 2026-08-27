@@ -222,6 +222,39 @@
   }
   .formula-note{font-size:13px;color:var(--ink-soft);}
 
+  /* --- current-state additions --- */
+  h3{font-size:15.5px;font-weight:700;color:var(--ink);margin:0;}
+  .subsection{display:flex;flex-direction:column;gap:14px;}
+  .lede{font-size:15px;color:var(--ink-soft);max-width:74ch;}
+
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media (max-width:620px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-tile{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--surface-alt);text-align:center;display:flex;flex-direction:column;gap:4px;}
+  .stat-num{font-family:"IBM Plex Mono", monospace;font-size:20px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;}
+  .stat-label{font-size:11.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.05em;}
+
+  .insight{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:0 10px 10px 0;font-size:14px;color:var(--ink);}
+
+  .script-box{border:1px solid var(--border);border-radius:14px;padding:18px 22px;background:var(--surface-alt);}
+  .script-box .who{font-weight:700;color:var(--accent-ink);font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;display:block;font-family:"IBM Plex Mono", monospace;}
+  .script-box p{margin:0;font-size:15px;line-height:1.6;color:var(--ink);font-style:italic;}
+
+  .chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+  .chip{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--paper);border:1px solid var(--border);color:var(--ink-soft);}
+
+  .timeline{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--paper);}
+  .timeline-item{display:grid;grid-template-columns:100px 1fr;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border);}
+  @media (max-width:560px){.timeline-item{grid-template-columns:1fr;gap:6px;}}
+  .timeline-item:last-child{border-bottom:none;}
+  .timeline-date{font-family:"IBM Plex Mono", monospace;font-size:12px;color:var(--ink-faint);padding-top:2px;}
+  .timeline-body{display:flex;flex-direction:column;gap:5px;}
+  .timeline-title{font-weight:700;font-size:14.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .timeline-desc{font-size:14px;color:var(--ink-soft);}
+  .pill{display:inline-flex;align-items:center;font-family:"IBM Plex Mono", monospace;font-size:10px;letter-spacing:0.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;}
+  .pill-plan{background:var(--accent-soft);color:var(--accent-ink);}
+  .pill-stall{background:var(--danger-soft);color:var(--danger-ink);}
+  .pill-live{background:var(--success-soft);color:var(--success-ink);}
+
   /* --- open questions --- */
   .questions{
     border:1px solid var(--danger);
@@ -250,7 +283,169 @@
   </header>
 
   <section>
-    <h2>Flow</h2>
+    <h2>Current state — across all brands</h2>
+    <p class="lede">Before any automation: this is what ops leads across every Curefoods brand confirmed as the live process in Jan 2026 (from Abhilash's note to leadership) — four separate mechanisms, mostly manual.</p>
+
+    <div class="subsection">
+      <h3>Four mechanisms in use today</h3>
+      <ol class="stages">
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">Bridge number with order <span class="sys">manual</span></div>
+            <div class="stage-desc">The kitchen team calls the customer during a short post-dispatch window, asking for a 5★ rating. Zomato: 30-minute window post-dispatch — the bridge number must be requested <i>before</i> dispatch or the option disappears. Swiggy: 30-minute window post-dispatch, bridge number comes with a PIN entered after dialling; up to 2 customer calls per order.</div>
+          </div>
+        </li>
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">Escalation / customer connect request <span class="sys">rarely used</span></div>
+            <div class="stage-desc">For post-order issues, ops can request a bridge number and calling slot directly from the Swiggy/Zomato POC to follow up with a customer. Used only occasionally.</div>
+          </div>
+        </li>
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">Swiggy owner app <span class="sys">native feature</span></div>
+            <div class="stage-desc">Lets any brand call customers who rated in the last 90 days, up to twice each. As of Jan 2026, only Millet Express and Olio were actually using it, and only at select locations.</div>
+          </div>
+        </li>
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">Zomato customer numbers with orders <span class="sys">Urban Piper</span></div>
+            <div class="stage-desc">Zomato lets brands opt in to receive customer contact numbers for selected markets. Pulled via Urban Piper: 1.23L numbers across brands — but a large share are 2–3 years old, which matters for connect rates on cold calls.</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="subsection">
+      <h3>Brand-by-brand rollout</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Brand</th><th>Bridge-number calling today</th><th>Swiggy owner app</th></tr></thead>
+          <tbody>
+            <tr><td class="field">EatFit (EF++)</td><td>Between order received &amp; delivery, ask for 5★ once received</td><td>Yes</td></tr>
+            <tr><td class="field">CakeZone++</td><td>Same as above</td><td>Yes</td></tr>
+            <tr><td class="field">Olio++</td><td>Same as above; also used centrally for Phat &amp; Slice via the owner app</td><td>Yes</td></tr>
+            <tr><td class="field">Nomad++</td><td>Same as above, plus calls to inform customers of a free add-on on bulk orders (20–50% of orders/store)</td><td>Yes</td></tr>
+            <tr><td class="field">Sharief Bhai (SB++)</td><td>Same as above, 10–15 orders/store</td><td>Yes</td></tr>
+            <tr><td class="field">Millet Express (ME++)</td><td>No regular bridge calling; Chennai uses the owner app 2–3 days/week</td><td>Yes</td></tr>
+            <tr><td class="field">Ovenfresh</td><td>No calling currently</td><td>Yes</td></tr>
+            <tr><td class="field">Frozen Bottle++</td><td>No calling currently</td><td>Yes</td></tr>
+            <tr><td class="field">Krispy Kreme (KK)</td><td>No calling currently</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Zomato contact numbers via Urban Piper</h3>
+      <p class="lede">1,23,351 numbers pulled across brands (Jan 2026 cut), skewed toward older orders:</p>
+      <div class="stat-row">
+        <div class="stat-tile"><div class="stat-num">62,362</div><div class="stat-label">2022 · 51%</div></div>
+        <div class="stat-tile"><div class="stat-num">9,702</div><div class="stat-label">2023 · 8%</div></div>
+        <div class="stat-tile"><div class="stat-num">43,142</div><div class="stat-label">2024 · 35%</div></div>
+        <div class="stat-tile"><div class="stat-num">8,145</div><div class="stat-label">2025 · 7%</div></div>
+      </div>
+      <div class="insight">Over half the pulled numbers are from 2022 — three-plus years old. Calling these cold risks a low connect rate; worth prioritising the 2024–2025 slice first.</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Brand</th><th>Contacts pulled</th></tr></thead>
+          <tbody>
+            <tr><td class="field">CakeZone</td><td class="example">51,012</td></tr>
+            <tr><td class="field">Sharief Bhai</td><td class="example">34,486</td></tr>
+            <tr><td class="field">Olio</td><td class="example">22,119</td></tr>
+            <tr><td class="field">Nomad</td><td class="example">5,263</td></tr>
+            <tr><td class="field">EatFit</td><td class="example">4,978</td></tr>
+            <tr><td class="field">Millet Express</td><td class="example">4,868</td></tr>
+            <tr><td class="field">Krispy Kreme</td><td class="example">285</td></tr>
+            <tr><td class="field">Ovenfresh</td><td class="example">178</td></tr>
+            <tr><td class="field">Roz</td><td class="example">96</td></tr>
+            <tr><td class="field">Arambam</td><td class="example">47</td></tr>
+            <tr><td class="field">Rolls On Wheels</td><td class="example">19</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Calling script &amp; NPS questions in use</h3>
+      <div class="script-box">
+        <span class="who">Opening script</span>
+        <p>"Hi, this is [Name] calling from the [Brand] team. You recently ordered from Swiggy. We would require 2 minutes of your time to understand your experience so we can improve. Is this a good time?"</p>
+      </div>
+      <ol class="stages">
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">Recommend likelihood <span class="sys">mandatory · core NPS</span></div>
+            <div class="stage-desc">"On a scale of 0 to 10, how likely are you to recommend [Brand Name] to your friends or family?"</div>
+          </div>
+        </li>
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">Reason for the score <span class="sys">mandatory · in depth</span></div>
+            <div class="stage-desc">"Could you please tell us the main reason for giving this score?" — this is where the actual voice of the customer comes from.</div>
+          </div>
+        </li>
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">What drove the rating <span class="sys">multiple choice</span></div>
+            <div class="stage-desc">"Which part of your experience influenced your rating the most?"</div>
+            <div class="chip-row"><span class="chip">Food taste &amp; quality</span><span class="chip">Portion size / value</span><span class="chip">Delivery time / condition</span><span class="chip">Packaging</span><span class="chip">Order accuracy</span><span class="chip">Overall experience</span></div>
+          </div>
+        </li>
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">What could improve <span class="sys">optional · recommended</span></div>
+            <div class="stage-desc">"What is the one thing we could have done better to improve your experience?"</div>
+          </div>
+        </li>
+        <li>
+          <div class="stage-body">
+            <div class="stage-title">Would they return <span class="sys">multiple choice</span></div>
+            <div class="stage-desc">"If we fix this issue, would you consider ordering from us again?"</div>
+            <div class="chip-row"><span class="chip">Yes, definitely</span><span class="chip">Maybe</span><span class="chip">No</span></div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="subsection">
+      <h3>Rollout status</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">22 Jan</div>
+          <div class="timeline-body">
+            <div class="timeline-title">PWS action <span class="pill pill-plan">planned</span></div>
+            <div class="timeline-desc">Start Swiggy owner app calling for rated customers, target 2,000 calls/day; Control Tower team to get app access and a call questionnaire.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">27 Jan</div>
+          <div class="timeline-body">
+            <div class="timeline-title">Access &amp; script shared <span class="pill pill-plan">planned</span></div>
+            <div class="timeline-desc">App access, the NPS script and questions above shared with the Control Tower team. Target 100 calls/day to start, tracked in a shared Google Sheet, covering the previous week's rated orders.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2 Feb</div>
+          <div class="timeline-body">
+            <div class="timeline-title">Stalled <span class="pill pill-stall">stalled</span></div>
+            <div class="timeline-desc">Tracking sheet still empty. Control Tower flags bandwidth constraints — not feasible right now with the current team.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">3–4 Feb</div>
+          <div class="timeline-body">
+            <div class="timeline-title">Escalated to Swiggy CX <span class="pill pill-plan">in progress</span></div>
+            <div class="timeline-desc">Escalated directly to the Swiggy CX team since Control Tower can't take this on. Swiggy CX asks Curefoods to share customer contact details directly so their own team can start the calling.</div>
+          </div>
+        </div>
+      </div>
+      <div class="insight">This bandwidth constraint is exactly what an automated pipeline removes — no Control Tower calling capacity required. See the proposed flow below.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Proposed flow — automated, no live agent</h2>
     <figure>
       <div class="diagram-frame">
         <svg viewBox="0 0 1400 400" role="img" aria-label="Order delivered triggers a lookup in Urban Piper, which returns a masked number and OTP; Exotel dials that number and plays a 30-second recorded rating ask; the call either connects or goes unanswered, and both outcomes are written to a backend log.">
