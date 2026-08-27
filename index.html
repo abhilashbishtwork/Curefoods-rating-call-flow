@@ -344,7 +344,7 @@
       <li>
         <div class="stage-body">
           <div class="stage-title">Look up the bridge number <span class="sys">Urban Piper</span></div>
-          <div class="stage-desc">The order is searched in Urban Piper, which returns the customer's masked/bridge number for that order along with an OTP — the credential that authorises using the number for this call.</div>
+          <div class="stage-desc">The order is searched in Urban Piper, which returns the customer's masked/bridge number for that order along with an OTP — the credential that authorises using the number for this call. The OTP is single-use and scoped to that one order_id; it can't be reused for a retry or any other call.</div>
         </div>
       </li>
       <li>
@@ -379,7 +379,7 @@
         <tbody>
           <tr><td class="field">call_id</td><td>Unique id for this call attempt</td><td class="example">CL-20260827-1043</td></tr>
           <tr><td class="field">order_id</td><td>Links the call back to the order</td><td class="example">ORD-994213</td></tr>
-          <tr><td class="field">masked_number</td><td>Bridge number dialled (OTP-gated)</td><td class="example">080XXXXXXX</td></tr>
+          <tr><td class="field">masked_number</td><td>Bridge number dialled (OTP-gated, one single-use OTP per order_id)</td><td class="example">080XXXXXXX</td></tr>
           <tr><td class="field">dialed_at</td><td>When Exotel placed the call, IST</td><td class="example">2026-08-27 14:32</td></tr>
           <tr><td class="field">status</td><td>connected / no_answer / rejected / busy</td><td class="example">connected</td></tr>
           <tr><td class="field">duration_sec</td><td>Length of the call</td><td class="example">34</td></tr>
@@ -409,7 +409,6 @@
     <h2>Open questions</h2>
     <ul>
       <li><b>Script wording</b> — the audio cuts off after "if you like the food then…" — need the exact line(s) in the 30-second clip.</li>
-      <li><b>OTP scope</b> — is the OTP fetched fresh per call, or once per order and reused on a retry?</li>
       <li><b>Retry logic</b> — if the first call goes unanswered, is there a second attempt within the 15-minute bridge window, or is one attempt final?</li>
       <li><b>Interaction</b> — is the clip purely spoken, or does it include a DTMF option (e.g. "press 1")? This decides whether anything beyond call completion is measurable as a conversion.</li>
     </ul>
