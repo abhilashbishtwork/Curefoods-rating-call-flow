@@ -437,7 +437,7 @@
       <li>
         <div class="stage-body">
           <div class="stage-title">Play the rating ask <span class="sys">30-second clip</span></div>
-          <div class="stage-desc">On connect, Exotel plays a pre-recorded 30-second clip asking how the food was, and nudging the customer toward a 5-star rating: <i>"Hi this is Anil, calling from Olio Pizza. We just dispatched your order hot &amp; fresh. Hope you like it. Please rate us 5-star, this will help us serve you better. Thank you."</i></div>
+          <div class="stage-desc">On connect, Exotel plays a pre-recorded clip nudging the customer toward a 5-star rating: <i>"Hi this is Anil, calling from Olio Pizza. We just dispatched your order hot &amp; fresh. Hope you like it. Please rate us 5-star, this will help us serve you better. Thank you."</i> Proposed: the 1st attempt stays ratings-only like this; a 2nd attempt (retry) adds a short open-ended feedback prompt, since the customer has had time to actually eat by then — see Open Queries.</div>
         </div>
       </li>
       <li>
@@ -478,7 +478,7 @@
       <div class="formula-card">
         <div class="formula-name">Connect rate</div>
         <div class="formula-expr">connected ÷ total dialed</div>
-        <div class="formula-note">"kitne logon ne call uthaya" — the share of calls a customer actually picked up.</div>
+        <div class="formula-note">How many customers picked the call — the share of calls a customer actually picked up.</div>
       </div>
       <div class="formula-card">
         <div class="formula-name">Full-play rate</div>
@@ -489,10 +489,10 @@
   </section>
 
   <section class="questions">
-    <h2>Open questions</h2>
+    <h2>Open queries</h2>
     <ul>
-      <li><b>Script wording</b> — the audio cuts off after "if you like the food then…" — need the exact line(s) in the 30-second clip.</li>
-      <li><b>Interaction</b> — is the clip purely spoken, or does it include a DTMF option (e.g. "press 1")? This decides whether anything beyond call completion is measurable as a conversion.</li>
+      <li><b>Feedback on the 2nd call</b> — the 1st call (right after dispatch) is ratings-only. <i>Recommendation:</i> have the retry/2nd attempt add a short open-ended feedback prompt after the rating ask, since by then the customer has actually eaten and can speak to specifics. Pending confirmation.</li>
+      <li><b>Interaction</b> — spoken-only, or a DTMF option (e.g. "press 1")? <i>Recommendation:</i> keep it one-person-speaking for the pilot, and hold off on DTMF/menu options until we see how real pilot calls go. Pending confirmation.</li>
     </ul>
   </section>
 
