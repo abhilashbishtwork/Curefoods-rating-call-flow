@@ -308,41 +308,6 @@
         </li>
       </ol>
     </div>
-
-    <div class="subsection">
-      <h3>Rollout status</h3>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-date">22 Jan</div>
-          <div class="timeline-body">
-            <div class="timeline-title">PWS action <span class="pill pill-plan">planned</span></div>
-            <div class="timeline-desc">Start Swiggy owner app calling for rated customers, target 2,000 calls/day; Control Tower team to get app access and a call questionnaire.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">27 Jan</div>
-          <div class="timeline-body">
-            <div class="timeline-title">Access &amp; script shared <span class="pill pill-plan">planned</span></div>
-            <div class="timeline-desc">App access, an NPS script and questions shared with the Control Tower team. Target 100 calls/day to start, tracked in a shared Google Sheet, covering the previous week's rated orders.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2 Feb</div>
-          <div class="timeline-body">
-            <div class="timeline-title">Stalled <span class="pill pill-stall">stalled</span></div>
-            <div class="timeline-desc">Tracking sheet still empty. Control Tower flags bandwidth constraints — not feasible right now with the current team.</div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">3–4 Feb</div>
-          <div class="timeline-body">
-            <div class="timeline-title">Escalated to Swiggy CX <span class="pill pill-plan">in progress</span></div>
-            <div class="timeline-desc">Escalated directly to the Swiggy CX team since Control Tower can't take this on. Swiggy CX asks Curefoods to share customer contact details directly so their own team can start the calling.</div>
-          </div>
-        </div>
-      </div>
-      <div class="insight">This bandwidth constraint is exactly what an automated pipeline removes — no Control Tower calling capacity required. See the proposed flow below.</div>
-    </div>
   </section>
 
   <section>
@@ -381,6 +346,10 @@
 
           <text class="arrow-label" x="815" y="140" text-anchor="end" fill="#2C5A40">answered</text>
           <text class="arrow-label" x="815" y="265" text-anchor="end" fill="#8A382E">no answer</text>
+
+          <!-- retry loop on no-answer -->
+          <path d="M1050,300 C1050,258 940,258 940,300" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <text class="arrow-label" x="995" y="250" text-anchor="middle" fill="#5B584E">retry ×1</text>
 
           <!-- converge arrows into backend log -->
           <line x1="1110" y1="80" x2="1193" y2="188" stroke="#3E7A56" stroke-width="1.5" marker-end="url(#arrowSuccess)"/>
