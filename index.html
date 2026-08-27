@@ -334,11 +334,11 @@
           <line x1="735" y1="200" x2="770" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
           <line x1="935" y1="200" x2="985" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-          <text class="arrow-label" x="182" y="150" text-anchor="middle" fill="#5B584E">order_id + phone</text>
+          <text class="arrow-label" x="182" y="260" text-anchor="middle" fill="#5B584E">order_id + phone</text>
           <text class="arrow-label" x="385" y="145" text-anchor="middle" fill="#5B584E">Zomato: masked number (before dispatch)</text>
           <text class="arrow-label" x="385" y="160" text-anchor="middle" fill="#5B584E">Swiggy: masked number + OTP</text>
-          <text class="arrow-label" x="575" y="145" text-anchor="middle" fill="#5B584E">auto-dial</text>
-          <text class="arrow-label" x="575" y="160" text-anchor="middle" fill="#5B584E">~25 min post-delivery</text>
+          <text class="arrow-label" x="575" y="255" text-anchor="middle" fill="#5B584E">auto-dial</text>
+          <text class="arrow-label" x="575" y="270" text-anchor="middle" fill="#5B584E">~25 min post-delivery</text>
 
           <!-- branch dot -->
           <circle cx="990" cy="200" r="5" fill="currentColor"/>
@@ -352,8 +352,8 @@
 
           <!-- retry loop on no-answer -->
           <path d="M1220,300 C1220,258 1110,258 1110,300" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
-          <text class="arrow-label" x="1165" y="245" text-anchor="middle" fill="#5B584E">retry once (2nd attempt)</text>
-          <text class="arrow-label" x="1165" y="260" text-anchor="middle" fill="#5B584E">still no answer → close &amp; log</text>
+          <text class="arrow-label" x="1165" y="245" text-anchor="middle" fill="#5B584E">no answer on 1st attempt → retry (2nd attempt)</text>
+          <text class="arrow-label" x="1165" y="260" text-anchor="middle" fill="#5B584E">still no answer after 2nd → close &amp; log as no_answer</text>
 
           <!-- converge arrows into Google Sheet log -->
           <line x1="1280" y1="80" x2="1363" y2="188" stroke="#3E7A56" stroke-width="1.5" marker-end="url(#arrowSuccess)"/>
@@ -459,6 +459,9 @@
         <tbody>
           <tr><td class="field">call_id</td><td>Unique id for this call attempt</td><td class="example">CL-20260827-1043</td></tr>
           <tr><td class="field">order_id</td><td>Links the call back to the order</td><td class="example">ORD-994213</td></tr>
+          <tr><td class="field">channel</td><td>Swiggy or Zomato</td><td class="example">Swiggy</td></tr>
+          <tr><td class="field">order_date</td><td>Date the order was placed</td><td class="example">2026-08-27</td></tr>
+          <tr><td class="field">order_time</td><td>Time the order was placed, IST</td><td class="example">14:05</td></tr>
           <tr><td class="field">masked_number</td><td>Bridge number dialled (OTP-gated, one single-use OTP per order_id, up to 2 call trials)</td><td class="example">080XXXXXXX</td></tr>
           <tr><td class="field">dialed_at</td><td>When Exotel placed the call, IST</td><td class="example">2026-08-27 14:32</td></tr>
           <tr><td class="field">status</td><td>connected / no_answer / rejected / busy</td><td class="example">connected</td></tr>
