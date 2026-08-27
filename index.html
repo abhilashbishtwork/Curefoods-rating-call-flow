@@ -314,7 +314,7 @@
     <h2>Proposed flow — automated, no live agent</h2>
     <figure>
       <div class="diagram-frame">
-        <svg viewBox="0 0 1400 400" role="img" aria-label="Order received triggers a lookup in Urban Piper, which returns a masked number and OTP; Exotel dials that number and plays a 30-second recorded rating ask; the call either connects or goes unanswered — an unanswered call retries once — and both outcomes are written to a backend log.">
+        <svg viewBox="0 0 1560 400" role="img" aria-label="Order received triggers a lookup in Urban Piper for a masked number, then the order is dispatched; only after dispatch does Exotel dial that number and play a 30-second recorded rating ask; the call either connects or goes unanswered — an unanswered call retries once — and both outcomes are written to a backend log.">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -328,69 +328,77 @@
           </defs>
 
           <!-- pipeline arrows -->
-          <line x1="160" y1="200" x2="203" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
-          <line x1="370" y1="200" x2="413" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
-          <line x1="560" y1="200" x2="603" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
-          <line x1="770" y1="200" x2="818" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="160" y1="200" x2="200" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="365" y1="200" x2="400" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="555" y1="200" x2="590" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="735" y1="200" x2="770" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="935" y1="200" x2="985" y2="200" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-          <text class="arrow-label" x="181" y="150" text-anchor="middle" fill="#5B584E">order_id + phone</text>
-          <text class="arrow-label" x="391" y="150" text-anchor="middle" fill="#5B584E">masked number + OTP</text>
-          <text class="arrow-label" x="581" y="150" text-anchor="middle" fill="#5B584E">auto-dial</text>
+          <text class="arrow-label" x="182" y="150" text-anchor="middle" fill="#5B584E">order_id + phone</text>
+          <text class="arrow-label" x="385" y="145" text-anchor="middle" fill="#5B584E">Zomato: masked number (before dispatch)</text>
+          <text class="arrow-label" x="385" y="160" text-anchor="middle" fill="#5B584E">Swiggy: masked number + OTP</text>
+          <text class="arrow-label" x="575" y="150" text-anchor="middle" fill="#5B584E">auto-dial</text>
 
           <!-- branch dot -->
-          <circle cx="825" cy="200" r="5" fill="currentColor"/>
+          <circle cx="990" cy="200" r="5" fill="currentColor"/>
 
           <!-- branch arrows -->
-          <line x1="828" y1="196" x2="873" y2="90" stroke="#3E7A56" stroke-width="1.5" marker-end="url(#arrowSuccess)"/>
-          <line x1="828" y1="204" x2="873" y2="315" stroke="#B14A3D" stroke-width="1.5" marker-end="url(#arrowDanger)"/>
+          <line x1="993" y1="196" x2="1043" y2="90" stroke="#3E7A56" stroke-width="1.5" marker-end="url(#arrowSuccess)"/>
+          <line x1="993" y1="204" x2="1043" y2="315" stroke="#B14A3D" stroke-width="1.5" marker-end="url(#arrowDanger)"/>
 
-          <text class="arrow-label" x="815" y="140" text-anchor="end" fill="#2C5A40">answered</text>
-          <text class="arrow-label" x="815" y="265" text-anchor="end" fill="#8A382E">no answer</text>
+          <text class="arrow-label" x="980" y="140" text-anchor="end" fill="#2C5A40">answered</text>
+          <text class="arrow-label" x="980" y="265" text-anchor="end" fill="#8A382E">no answer</text>
 
           <!-- retry loop on no-answer -->
-          <path d="M1050,300 C1050,258 940,258 940,300" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
-          <text class="arrow-label" x="995" y="250" text-anchor="middle" fill="#5B584E">retry ×1</text>
+          <path d="M1220,300 C1220,258 1110,258 1110,300" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <text class="arrow-label" x="1165" y="250" text-anchor="middle" fill="#5B584E">retry ×1</text>
 
           <!-- converge arrows into backend log -->
-          <line x1="1110" y1="80" x2="1193" y2="188" stroke="#3E7A56" stroke-width="1.5" marker-end="url(#arrowSuccess)"/>
-          <line x1="1110" y1="325" x2="1193" y2="215" stroke="#B14A3D" stroke-width="1.5" marker-end="url(#arrowDanger)"/>
+          <line x1="1280" y1="80" x2="1363" y2="188" stroke="#3E7A56" stroke-width="1.5" marker-end="url(#arrowSuccess)"/>
+          <line x1="1280" y1="325" x2="1363" y2="215" stroke="#B14A3D" stroke-width="1.5" marker-end="url(#arrowDanger)"/>
 
-          <!-- N1 Order Delivered -->
+          <!-- N1 Order Received -->
           <rect x="20" y="165" width="140" height="70" rx="10" fill="#FBFAF5" stroke="#E1DCC9" stroke-width="1.5"/>
           <text class="node-title" x="90" y="196" text-anchor="middle" fill="#1B1B18">ORDER</text>
           <text class="node-title" x="90" y="212" text-anchor="middle" fill="#1B1B18">RECEIVED</text>
           <text class="node-sub" x="90" y="227" text-anchor="middle" fill="#8B876F">trigger event</text>
 
           <!-- N2 Urban Piper -->
-          <rect x="210" y="165" width="160" height="70" rx="10" fill="#FFFFFF" stroke="#E1DCC9" stroke-width="1.5"/>
-          <text class="node-title" x="290" y="200" text-anchor="middle" fill="#1B1B18">URBAN PIPER</text>
-          <text class="node-sub" x="290" y="217" text-anchor="middle" fill="#8B876F">order lookup API</text>
+          <rect x="205" y="165" width="160" height="70" rx="10" fill="#FFFFFF" stroke="#E1DCC9" stroke-width="1.5"/>
+          <text class="node-title" x="285" y="200" text-anchor="middle" fill="#1B1B18">URBAN PIPER</text>
+          <text class="node-sub" x="285" y="217" text-anchor="middle" fill="#8B876F">order lookup API</text>
 
-          <!-- N3 Exotel -->
-          <rect x="420" y="165" width="140" height="70" rx="10" fill="#FFFFFF" stroke="#E1DCC9" stroke-width="1.5"/>
-          <text class="node-title" x="490" y="200" text-anchor="middle" fill="#1B1B18">EXOTEL</text>
-          <text class="node-sub" x="490" y="217" text-anchor="middle" fill="#8B876F">outbound call API</text>
+          <!-- N3 Order Dispatched -->
+          <rect x="405" y="165" width="150" height="70" rx="10" fill="#FBFAF5" stroke="#E1DCC9" stroke-width="1.5"/>
+          <text class="node-title" x="480" y="196" text-anchor="middle" fill="#1B1B18">ORDER</text>
+          <text class="node-title" x="480" y="212" text-anchor="middle" fill="#1B1B18">DISPATCHED</text>
+          <text class="node-sub" x="480" y="227" text-anchor="middle" fill="#8B876F">kitchen event</text>
 
-          <!-- N4 IVR Clip -->
-          <rect x="610" y="165" width="160" height="70" rx="10" fill="#FFFFFF" stroke="#E1DCC9" stroke-width="1.5"/>
-          <text class="node-title" x="690" y="200" text-anchor="middle" fill="#1B1B18">IVR CLIP · 30s</text>
-          <text class="node-sub" x="690" y="217" text-anchor="middle" fill="#8B876F">pre-recorded rating ask</text>
+          <!-- N4 Exotel -->
+          <rect x="595" y="165" width="140" height="70" rx="10" fill="#FFFFFF" stroke="#E1DCC9" stroke-width="1.5"/>
+          <text class="node-title" x="665" y="200" text-anchor="middle" fill="#1B1B18">EXOTEL</text>
+          <text class="node-sub" x="665" y="217" text-anchor="middle" fill="#8B876F">outbound call API</text>
 
-          <!-- N5a Picked Up -->
-          <rect x="880" y="40" width="230" height="60" rx="10" fill="#E9F3EC" stroke="#3E7A56" stroke-width="1.5"/>
-          <text class="node-title" x="995" y="66" text-anchor="middle" fill="#2C5A40">PICKED UP</text>
-          <text class="node-sub" x="995" y="82" text-anchor="middle" fill="#2C5A40">hears the ask</text>
+          <!-- N5 IVR Clip -->
+          <rect x="775" y="165" width="160" height="70" rx="10" fill="#FFFFFF" stroke="#E1DCC9" stroke-width="1.5"/>
+          <text class="node-title" x="855" y="200" text-anchor="middle" fill="#1B1B18">IVR CLIP · 30s</text>
+          <text class="node-sub" x="855" y="217" text-anchor="middle" fill="#8B876F">pre-recorded rating ask</text>
 
-          <!-- N5b No Answer -->
-          <rect x="880" y="300" width="230" height="60" rx="10" fill="#FBEAE6" stroke="#B14A3D" stroke-width="1.5"/>
-          <text class="node-title" x="995" y="326" text-anchor="middle" fill="#8A382E">NO ANSWER</text>
-          <text class="node-sub" x="995" y="342" text-anchor="middle" fill="#8A382E">hangup / rejected</text>
+          <!-- N6a Picked Up -->
+          <rect x="1050" y="40" width="230" height="60" rx="10" fill="#E9F3EC" stroke="#3E7A56" stroke-width="1.5"/>
+          <text class="node-title" x="1165" y="66" text-anchor="middle" fill="#2C5A40">PICKED UP</text>
+          <text class="node-sub" x="1165" y="82" text-anchor="middle" fill="#2C5A40">hears the ask</text>
 
-          <!-- N6 Backend Log -->
-          <rect x="1200" y="165" width="170" height="70" rx="10" fill="#FBF0D9" stroke="#B8790C" stroke-width="1.5"/>
-          <text class="node-title" x="1285" y="196" text-anchor="middle" fill="#7A4E05">BACKEND</text>
-          <text class="node-title" x="1285" y="212" text-anchor="middle" fill="#7A4E05">LOG</text>
-          <text class="node-sub" x="1285" y="227" text-anchor="middle" fill="#7A4E05">outcome + metrics</text>
+          <!-- N6b No Answer -->
+          <rect x="1050" y="300" width="230" height="60" rx="10" fill="#FBEAE6" stroke="#B14A3D" stroke-width="1.5"/>
+          <text class="node-title" x="1165" y="326" text-anchor="middle" fill="#8A382E">NO ANSWER</text>
+          <text class="node-sub" x="1165" y="342" text-anchor="middle" fill="#8A382E">hangup / rejected</text>
+
+          <!-- N7 Backend Log -->
+          <rect x="1370" y="165" width="170" height="70" rx="10" fill="#FBF0D9" stroke="#B8790C" stroke-width="1.5"/>
+          <text class="node-title" x="1455" y="196" text-anchor="middle" fill="#7A4E05">BACKEND</text>
+          <text class="node-title" x="1455" y="212" text-anchor="middle" fill="#7A4E05">LOG</text>
+          <text class="node-sub" x="1455" y="227" text-anchor="middle" fill="#7A4E05">outcome + metrics</text>
         </svg>
       </div>
       <figcaption>Both outcomes — answered and unanswered — write to the same backend log, which is what makes a success rate computable at all.</figcaption>
@@ -414,8 +422,14 @@
       </li>
       <li>
         <div class="stage-body">
+          <div class="stage-title">Order dispatched <span class="sys">kitchen event</span></div>
+          <div class="stage-desc">The kitchen marks the order dispatched. This is the gate: Exotel does not place the call until this event has happened.</div>
+        </div>
+      </li>
+      <li>
+        <div class="stage-body">
           <div class="stage-title">Place the call <span class="sys">Exotel</span></div>
-          <div class="stage-desc">The masked number is handed to Exotel, which dials the customer directly. No agent is involved — this is a fully automated outbound call. Up to 2 call attempts (trials) are allowed per order.</div>
+          <div class="stage-desc">Only once the order is dispatched, the masked number is handed to Exotel, which dials the customer directly. No agent is involved — this is a fully automated outbound call. Up to 2 call attempts (trials) are allowed per order.</div>
         </div>
       </li>
       <li>
